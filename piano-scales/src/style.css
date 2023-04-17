@@ -1,0 +1,354 @@
+/* common styles, see also colors at the end */
+@media all {
+    /* make everything rounded and kid-friendly */
+    * { border-radius: 5px; }
+    div { border-radius: 0; }
+
+    html, body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+    }
+
+    #app {
+        width: auto;
+        height: 100vh;
+        display: grid;
+    }
+
+    #controls {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        padding: 3px 20px;
+    }
+
+    #piano {
+        /* overflow:auto changes the size of the keys for some reason,
+            probably related to block formatting contexts, see:
+            https://developer.mozilla.org/en-US/docs/Web/Guide/CSS/Block_formatting_context */
+        overflow: auto;
+        touch-action: manipulation;
+        display: flex;
+    }
+
+    .whitekey.highlightkey {
+        background: var(--teal1);
+    }
+
+    .blackkey.highlightkey {
+        background: var(--blue1);
+    }
+
+    #controls > * {
+        width: 100px;
+        height: 60px;
+        border-radius: 30px;
+        border: none;
+        margin: 3px 0;
+    }
+
+    #clear_all {
+        background-image: url(../assets/icons/google-material-refresh.svg);
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+
+    #clear_last {
+        background-image: url(../assets/icons/google-material-undo.svg);
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+
+    .guess_small {
+        flex-shrink: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 5px;
+        font-family: Arial, Helvetica, sans-serif;
+
+        /* center text content */
+        height: var(--height);
+        width: calc(1.18 * var(--height));
+        text-align: center;
+        line-height: var(--height);
+        border-width: 3px;
+        border-color: var(--orange1);
+        border-style: solid;
+    }
+    .note {
+        flex-shrink: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 5px;
+        font-family: Arial, Helvetica, sans-serif;
+
+        /* center text content */
+        text-align: center;
+        line-height: var(--height);
+        border-width: 3px;
+        border-color: var(--black1);
+        border-style: solid;
+    }
+
+    #guess_list {
+        display: flex;
+        flex-wrap: wrap;
+        overflow: auto;
+        justify-content: center;
+        align-items: center;
+        flex-direction: row;
+        gap:8px;
+        flex: none;
+        padding: 5px;
+
+        /* provide wrapping when we have lots of guesses */
+        flex-wrap: wrap;
+        align-items: flex-start;
+        align-content: flex-start;
+    }
+
+    #note_list {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: normal;
+        align-items: center;
+        align-content: space-evenly;
+    }
+}
+
+/* big screen layout */
+@media (840px <= width) {
+    #app {
+        grid-template-columns: 1fr 150px 250px;
+        grid-template-rows: 1fr auto;
+    }
+
+    #piano {
+        grid-column: 1 / 2;
+        grid-row: 1 / -1;
+
+        flex-direction: row;
+        align-items: flex-start;
+        max-height: 500px;
+    }
+
+    #note_list {
+        grid-column: 2 / 3;
+        grid-row: 1 / -1;
+        flex-direction: column;
+    }
+
+    #controls {
+        grid-row: 2 / 3;
+    }
+
+    .blackkey, .whitekey {
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+    }
+
+    .blackkey {
+        --width: 30px;
+        width: var(--width);
+        margin: 0  calc(-1 * var(--width) / 2);
+        z-index: 2;
+        height: 60%;
+        border: none;
+        padding: 0;
+    }
+
+    .whitekey {
+        width: 60px;
+        height: 100%;
+        padding: 0;
+        border: 1px solid;
+    }
+
+    .guess_small {
+        --height: 2.5rem;
+        font-size: 1.2rem;
+    }
+
+    #note_list {
+        gap: 10px 3px;
+        padding: 15px 0;
+    }
+
+    .note {
+        width: 3.7rem;
+        height: 3rem;
+        font-size: 1.7rem;
+    }
+}
+
+/* mobile layout */
+@media (width < 840px) {
+    @media all {
+        .guess_small {
+            --height: 1.7rem;
+            font-size: .9rem;
+        }
+
+        .note {
+            width: 3rem;
+            height: 2.5rem;
+            font-size: 1.4rem;
+        }
+    }
+    @media (orientation: portrait) {
+        #app {
+            grid-template-rows: 1fr 120px 100px;
+            grid-template-columns: 1fr min-content;
+        }
+
+        #piano {
+            grid-row: 1 / 2;
+            grid-column: 1 / -1;
+
+            flex-direction: column;
+            align-items: flex-end;
+            max-width: 500px;
+        }
+
+        #note_list {
+            grid-row: 2 / 3;
+            grid-column: 1 / -1;
+            flex-direction: row;
+
+            gap: 3px 5px;
+            padding: 0 5px;
+        }
+
+        #controls {
+            grid-row: 3 / 4;
+        }
+
+        #guess_list {
+            grid-row: 3 / 4;
+        }
+
+        .blackkey, .whitekey {
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+        }
+
+        .blackkey {
+            --height: 30px;
+            height: var(--height);
+            margin: calc(-1 * var(--height) / 2) 0;
+            z-index: 2;
+            width: 60%;
+            border: none;
+            padding: 0;
+        }
+
+        .whitekey {
+            height: 60px;
+            width: 100%;
+            padding: 0;
+            border: 1px solid;
+        }
+    }
+    @media (orientation: landscape) {
+        #app {
+            grid-template-rows: 1fr min-content;
+            grid-template-columns: 1fr 120px 100px;
+        }
+
+        #piano {
+            grid-row: 1 / -1;
+            grid-column: 1 / 2;
+
+            flex-direction: row;
+            align-items: flex-start;
+            max-height: 500px;
+        }
+
+        #note_list {
+            grid-row: 1 / -1;
+            grid-column: 2 / 3;
+            flex-direction: column;
+
+            gap: 3px 5px;
+            padding: 0 5px;
+        }
+
+        #controls {
+            grid-column: 3 / 4;
+        }
+
+        #guess_list {
+            grid-column: 3 / 4;
+        }
+
+        .blackkey, .whitekey {
+            border-top-left-radius: 0;
+            border-top-right-radius: 0;
+        }
+
+        .blackkey {
+            --width: 30px;
+            width: var(--width);
+            margin: 0  calc(-1 * var(--width) / 2);
+            z-index: 2;
+            height: 60%;
+            border: none;
+            padding: 0;
+        }
+
+        .whitekey {
+            width: 60px;
+            height: 100%;
+            padding: 0;
+            border: 1px solid;
+        }
+    }
+}
+
+
+/*    COLORS    */
+:root {
+    --green1:   #8be561;
+    --green2:   #2ca353;
+    --green3:   #7cc444;
+    --green4:   #00b140;
+    --red1:     #f91d1d;
+    --red2:     #c76848;
+    --red3:     #bc5e45;
+    --red4:     #f33041;
+    --teal1:    #87d2e6;
+    --teal2:    #45e3d7;
+    --blue1:    #007db8;
+    --blue2:    #105fa6;
+    --blue3:    #21cfff;
+    --yellow1:  #f1aa14;
+    --yellow2:  #e7910a;
+    --yellow3:  #f7e365;
+    --yellow4:  #efd751;
+    --yellow5:  #ffde00;
+    --orange1:  #ff9800;
+    --magenta1: #ff07a7;
+    --black1:   black;
+    --white1:   ivory;
+    --grey1:    grey;
+}
+
+#app { background-color: var(--green3); }
+
+.blackkey { background-color: var(--black1); }
+.whitekey { background-color: var(--white1); }
+.whitekey { border-color: var(--grey1); }
+
+#controls { background-color: var(--green2);}
+#guess_list { background-color: var(--green1); }
+#note_list { background-color: var(--yellow4); }
+
+#controls > * { background-color: var(--green1); }
+
+.guess_small { background-color: var(--white1); }
+.note { background-color: var(--white1); }
