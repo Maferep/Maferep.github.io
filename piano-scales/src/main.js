@@ -38,6 +38,7 @@ class App {
     }
 
     show_help() {
+        console.log("print!!!");
         this.ui.show_popup();
     }
 
@@ -58,6 +59,7 @@ class AppUI {
         this._piano_element = document.getElementById("piano");
         this._guess_list_element = document.getElementById("guess_list");
         this._note_list_element = document.getElementById("note_list");
+        this._help_popup_element = document.getElementById("help_grayout");
 
         this._callbacks = new Map();
 
@@ -101,6 +103,9 @@ class AppUI {
         });
         document.getElementById("clear_last").addEventListener("click", () => {
             this._emit("clear_last");
+        });
+        document.getElementById("help").addEventListener("click", () => {
+            this._emit("help");
         });
     }
 
@@ -154,6 +159,11 @@ class AppUI {
 
     unset_highlight(note, _octave) {
         this._piano_element.children[note + 12*_octave].classList.remove("highlightkey");
+    }
+
+    show_popup() {
+        console.log(this._help_popup_element.getAttribute("visibility"));
+        this._help_popup_element.style.visibility = "visible";
     }
 
     clear_highlights() {
