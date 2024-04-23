@@ -13,6 +13,7 @@ class App {
         this.ui.subscribe("note", this.playnote.bind(this));
         this.ui.subscribe("clear_all", this.clear_all.bind(this));
         this.ui.subscribe("clear_last", this.clear_last.bind(this));
+        this.ui.subscribe("help", this.show_help.bind(this));
     }
 
     playnote(note, _octave) {
@@ -34,6 +35,10 @@ class App {
         this.ui.clear_highlights();
         for (const [note, _octave] of new Set(this.guesser.note_history))
             this.ui.set_highlight(note, _octave);
+    }
+
+    show_help() {
+        this.ui.show_popup();
     }
 
     _update_guesser_view() {
