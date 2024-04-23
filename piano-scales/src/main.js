@@ -14,6 +14,7 @@ class App {
         this.ui.subscribe("clear_all", this.clear_all.bind(this));
         this.ui.subscribe("clear_last", this.clear_last.bind(this));
         this.ui.subscribe("help", this.show_help.bind(this));
+        this.ui.subscribe("grayout", this.hide_help.bind(this));
     }
 
     playnote(note, _octave) {
@@ -38,8 +39,11 @@ class App {
     }
 
     show_help() {
-        console.log("print!!!");
         this.ui.show_popup();
+    }
+
+    hide_help() {
+        this.ui.hide_popup();
     }
 
     _update_guesser_view() {
@@ -107,6 +111,9 @@ class AppUI {
         document.getElementById("help").addEventListener("click", () => {
             this._emit("help");
         });
+        document.getElementById("help_grayout").addEventListener("click", () => {
+            this._emit("grayout");
+        });
     }
 
     subscribe(eventname, callback) {
@@ -162,8 +169,11 @@ class AppUI {
     }
 
     show_popup() {
-        console.log(this._help_popup_element.getAttribute("visibility"));
         this._help_popup_element.style.visibility = "visible";
+    }
+
+    hide_popup() {
+        this._help_popup_element.style.visibility = "hidden";
     }
 
     clear_highlights() {
