@@ -111,7 +111,8 @@ class AppUI {
         document.getElementById("help").addEventListener("click", () => {
             this._emit("help");
         });
-        document.getElementById("help_grayout").addEventListener("click", () => {
+        document.getElementById("help_grayout").addEventListener("click", (event) => {
+            if (event.target !== document.getElementById("help_grayout")) return;
             this._emit("grayout");
         });
     }
