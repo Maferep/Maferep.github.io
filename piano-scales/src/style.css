@@ -19,12 +19,13 @@
 
     #help_container {
         display: flex;
-        width: 80%;
+        width: 70%;
         justify-content: center;
         background-color:#2ca353;
         border-radius: 5px;
         flex-direction: column;
         padding: 50px;
+        text-align: center;
     }
 
     #help_grayout {
